@@ -1,0 +1,108 @@
+definitions:
+  response.DumpParam:
+    properties:
+      dir:
+        description: 冻结文件保存地址
+        type: string
+      leaveRunning:
+        description: 在不停止程序时冻结当前程序进程
+        type: boolean
+      pid:
+        description: 进程ID
+        type: integer
+      shellJob:
+        description: 是否是一个命令行程序
+        type: boolean
+      tcpClose:
+        description: 关闭已建立的TCP
+        type: boolean
+      tcpEstablished:
+        description: 是否已建立TCP连接
+        type: boolean
+      tcpSkipInFlight:
+        description: 是否跳过正在运行的TCP连接
+        type: boolean
+    type: object
+  response.Response:
+    properties:
+      code:
+        description: 响应状态
+        type: integer
+      data:
+        description: 返回数据
+        type: object
+      msg:
+        description: 响应消息
+        type: string
+    type: object
+  response.RestoreParam:
+    properties:
+      dir:
+        description: 冻结文件保存地址
+        type: string
+      leaveRunning:
+        description: 是否跳过正在运行的TCP连接
+        type: boolean
+      rstSibling:
+        description: 将根任务还原为同级
+        type: boolean
+      shellJob:
+        description: 是否是一个命令行程序
+        type: boolean
+      tcpClose:
+        description: 关闭已建立的TCP
+        type: boolean
+      tcpEstablished:
+        description: 是否已建立TCP连接
+        type: boolean
+      tcpSkipInFlight:
+        description: 是否跳过正在运行的TCP连接
+        type: boolean
+    type: object
+info:
+  contact: {}
+  description: swagger server api
+  title: 热迁移
+  version: "1.0"
+paths:
+  /dump:
+    post:
+      consumes:
+      - application/json
+      description: Freezing process
+      parameters:
+      - description: Request parameters
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.DumpParam'
+      responses:
+        "200":
+          description: Response parameters
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Freezing process
+      tags:
+      - ciu
+  /restore:
+    post:
+      consumes:
+      - application/json
+      description: Resume frozen programs
+      parameters:
+      - description: Request parameters
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.RestoreParam'
+      responses:
+        "200":
+          description: Response parameters
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Resume frozen programs
+      tags:
+      - ciu
+swagger: "2.0"
